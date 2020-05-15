@@ -7,9 +7,9 @@ public class AttackMonster : MonoBehaviour
     public SpriteRenderer[] MonsterRight;
     public SpriteRenderer[] MonsterLeft;
     public SpriteRenderer[] IceBlock;
-    private int StateLeft = 0;
-    private int StateRight = 0;
-    private int StateIce = 0;
+    public int StateLeft = 0;
+    public int StateRight = 0;
+    public int StateIce = 0;
     public int Speed;
     public int Rand;
 

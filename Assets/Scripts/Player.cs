@@ -6,7 +6,8 @@ public class Player : MonoBehaviour
 {
     public SpriteRenderer[] Pinguins;
 
-    private int currentPinguin;
+    public int currentPinguin;
+    public bool State = true;
     // Start is called before the first frame update
     void Start()
     {

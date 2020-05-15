@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using TMPro;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameMaster : MonoBehaviour
@@ -16,7 +18,9 @@ public class GameMaster : MonoBehaviour
     private int TickTimer = 0;
     private int Level = 1;
     private int Score = 0;
-    // Start is called before the first frame update
+    public TextMeshProUGUI scoretxt;
+    public TextMeshProUGUI lvltxt;
+
     void Start()
     {
         Speed = StartSpeed;
@@ -29,14 +33,48 @@ public class GameMaster : MonoBehaviour
         IceBlock.GetComponent<AttackMonster>().Speed = Speed;
     }
 
-    // Update is called once per frame
+    void DeathManager()
+    {
+        if (Player.GetComponent<Player>().currentPinguin == 1 
+            && Bear.GetComponent<AttackMonster>().StateLeft == 2)
+        {
+            Player.GetComponent<Player>().State = false;
+        }
+        if (Player.GetComponent<Player>().currentPinguin == 5 
+            && Bear.GetComponent<AttackMonster>().StateRight == 2)
+        {
+            Player.GetComponent<Player>().State = false;
+        }
+        if (Player.GetComponent<Player>().currentPinguin == 2 
+            && Fish.GetComponent<AttackMonster>().StateLeft == 2)
+        {
+            Player.GetComponent<Player>().State = false;
+        }
+        if (Player.GetComponent<Player>().currentPinguin == 4 
+            && Fish.GetComponent<AttackMonster>().StateRight == 2)
+        {
+            Player.GetComponent<Player>().State = false;
+        }
+         if (Player.GetComponent<Player>().currentPinguin == 3 
+            && IceBlock.GetComponent<AttackMonster>().StateIce == 3)
+        {
+            Player.GetComponent<Player>().State = false;
+        }
+        if (Player.GetComponent<Player>().State == false)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     void FixedUpdate()
     {
         Timer++;
         TickTimer++;
         if (TickTimer >= Speed)
         {
-            Score += 10;
+            //Score += 10;
+            Score = 100000;
+            scoretxt.text = "Score: " + Score.ToString();
+            lvltxt.text = "Level: " + Level.ToString();
+            DeathManager();
             TickTimer = 0;
         }
         if (Timer == LevelUpSpeed)
