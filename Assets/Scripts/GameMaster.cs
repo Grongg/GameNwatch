@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameMaster : MonoBehaviour
 {
     public GameObject Player, Fish, Bear, IceBlock;
+    public GameObject SoundManager;
     public int StartSpeed;
     public int MaxSpeed;
     public int StartRandom;
@@ -23,6 +24,8 @@ public class GameMaster : MonoBehaviour
 
     void Start()
     {
+        SoundManager.GetComponent<SoundManager>().PlaySound(SoundManager.GetComponent<SoundManager>().Start);
+        SoundManager.GetComponent<SoundManager>().PlayMusic();
         Speed = StartSpeed;
         Rand = StartRandom;
         Fish.GetComponent<AttackMonster>().Rand = Rand;
@@ -61,7 +64,10 @@ public class GameMaster : MonoBehaviour
             Player.GetComponent<Player>().State = false;
         }
         if (Player.GetComponent<Player>().State == false)
+        {
+            SoundManager.GetComponent<SoundManager>().PlaySound(SoundManager.GetComponent<SoundManager>().Death);     
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     void FixedUpdate()
@@ -70,11 +76,11 @@ public class GameMaster : MonoBehaviour
         TickTimer++;
         if (TickTimer >= Speed)
         {
-            //Score += 10;
-            Score = 100000;
+            Score += 10;
             scoretxt.text = "Score: " + Score.ToString();
             lvltxt.text = "Level: " + Level.ToString();
             DeathManager();
+            SoundManager.GetComponent<SoundManager>().PlaySound(SoundManager.GetComponent<SoundManager>().timeTick);
             TickTimer = 0;
         }
         if (Timer == LevelUpSpeed)
@@ -95,6 +101,7 @@ public class GameMaster : MonoBehaviour
             Score += 200;
             Level++;
             Timer = 0;
+            SoundManager.GetComponent<SoundManager>().PlaySound(SoundManager.GetComponent<SoundManager>().speedUp);
         }
     }
 }
