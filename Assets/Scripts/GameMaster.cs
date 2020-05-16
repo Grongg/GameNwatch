@@ -36,6 +36,11 @@ public class GameMaster : MonoBehaviour
         IceBlock.GetComponent<AttackMonster>().Speed = Speed;
     }
 
+    void Pause()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     void DeathManager()
     {
         if (Player.GetComponent<Player>().currentPinguin == 1 
@@ -65,8 +70,13 @@ public class GameMaster : MonoBehaviour
         }
         if (Player.GetComponent<Player>().State == false)
         {
-            SoundManager.GetComponent<SoundManager>().PlaySound(SoundManager.GetComponent<SoundManager>().Death);     
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SoundManager.GetComponent<SoundManager>().PlaySound(SoundManager.GetComponent<SoundManager>().Death);
+            this.GetComponent<GameMaster>().enabled = false;
+            Bear.GetComponent<AttackMonster>().enabled = false;
+            Fish.GetComponent<AttackMonster>().enabled = false;
+            IceBlock.GetComponent<AttackMonster>().enabled = false;
+            Player.GetComponent<Player>().enabled = false;
+            Invoke("Pause", 2);
         }
     }
 
